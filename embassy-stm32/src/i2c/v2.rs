@@ -45,6 +45,11 @@ impl<'d, M: Mode> I2c<'d, M> {
         });
     }
 
+    pub(crate) fn reset(&mut self) {
+        // self.info.regs.apb1()
+        yooyoyo
+    }
+
     fn master_stop(&mut self) {
         self.info.regs.cr2().write(|w| w.set_stop(true));
     }

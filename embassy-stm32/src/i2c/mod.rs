@@ -210,6 +210,16 @@ impl<'d, M: Mode> I2c<'d, M> {
             deadline: Instant::now() + self.timeout,
         }
     }
+
+    /// attempt to work around i2c arbitration hanging
+    pub fn reset(&mut self, freq: Hertz, config: Config) {
+        self.enable_and_init(freq, config)
+    }
+
+    /// clear any i2c error
+    pub fn clear_error(&mut self) {
+        self.info.regs.sr1().modify(|reg| reg.set_berr(false))
+    }
 }
 
 impl<'d, M: Mode> Drop for I2c<'d, M> {
